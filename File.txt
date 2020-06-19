@@ -1,0 +1,6 @@
+Hello Mr Kaune
+
+This is a demonstration of the fact that I could link to all of the work files needed.
+
+To make this better I would allow the user to edit a text file (like this one) with all the file links to their
+current job. Then those links would be read into the program and used.
