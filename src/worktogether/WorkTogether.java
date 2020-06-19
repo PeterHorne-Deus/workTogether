@@ -24,7 +24,11 @@ public class WorkTogether extends javax.swing.JFrame {
      * Creates new form WorkTogether
      */
     
+    //Public variables
+    int jobNum = 0;   
     int signIn = 0;
+    int currentPage = 0;
+    
     
     //Stack overflow
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -34,6 +38,14 @@ public class WorkTogether extends javax.swing.JFrame {
         
         //Stack Overflow
         setSize(screenSize.width, screenSize.height);
+        
+        //Starting set up
+        jobListPanel.hide();
+        jobFilePanel.hide();
+        jobInfoPanel.hide();
+        commentsPanel.hide();
+        clientPanel.hide();
+        
         
     }
 
@@ -72,6 +84,7 @@ public class WorkTogether extends javax.swing.JFrame {
         editFileBtn = new javax.swing.JButton();
         fileBackBtn = new javax.swing.JButton();
         fileExitBtn = new javax.swing.JButton();
+        notAvailableLbl = new javax.swing.JLabel();
         jobInfoPanel = new javax.swing.JPanel();
         jobNameLbl = new javax.swing.JLabel();
         jobBackBtn = new javax.swing.JButton();
@@ -108,6 +121,11 @@ public class WorkTogether extends javax.swing.JFrame {
         clientPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         clientBackBtn.setText("⬅");
+        clientBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientBackBtnActionPerformed(evt);
+            }
+        });
         clientPanel.add(clientBackBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         clientTitleLbl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -116,10 +134,17 @@ public class WorkTogether extends javax.swing.JFrame {
 
         clientExitBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         clientExitBtn.setText("X");
+        clientExitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientExitBtnActionPerformed(evt);
+            }
+        });
         clientPanel.add(clientExitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 0, 40, -1));
 
+        clientCommentTxtArea.setEditable(false);
         clientCommentTxtArea.setColumns(20);
         clientCommentTxtArea.setRows(5);
+        clientCommentTxtArea.setText("This is where client information\nwould go from a file. Not Currently \nFunctional");
         jScrollPane3.setViewportView(clientCommentTxtArea);
 
         clientPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 280, 180));
@@ -130,10 +155,20 @@ public class WorkTogether extends javax.swing.JFrame {
         commentsPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         commentsBackBtn.setText("⬅");
+        commentsBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                commentsBackBtnActionPerformed(evt);
+            }
+        });
         commentsPanel.add(commentsBackBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         commentsExitBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         commentsExitBtn.setText("X");
+        commentsExitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                commentsExitBtnActionPerformed(evt);
+            }
+        });
         commentsPanel.add(commentsExitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 0, 40, -1));
 
         mainCommentTxtArea.setColumns(20);
@@ -144,6 +179,11 @@ public class WorkTogether extends javax.swing.JFrame {
         commentsPanel.add(addCommentsTxtFeild, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 200, 30));
 
         sendBtn.setText("Send");
+        sendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendBtnActionPerformed(evt);
+            }
+        });
         commentsPanel.add(sendBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 70, 30));
 
         commentsTitleLbl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -153,30 +193,69 @@ public class WorkTogether extends javax.swing.JFrame {
         jobFilePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         file4Btn.setText("File 4");
+        file4Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                file4BtnActionPerformed(evt);
+            }
+        });
         jobFilePanel.add(file4Btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 90, -1));
 
         fileTitleLbl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         fileTitleLbl.setText("(Job Name)");
-        jobFilePanel.add(fileTitleLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
+        jobFilePanel.add(fileTitleLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
 
         file1Btn.setText("File 1");
+        file1Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                file1BtnActionPerformed(evt);
+            }
+        });
         jobFilePanel.add(file1Btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 90, -1));
 
         file2Btn.setText("File 2");
+        file2Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                file2BtnActionPerformed(evt);
+            }
+        });
         jobFilePanel.add(file2Btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 90, -1));
 
         file3Btn.setText("File 3");
+        file3Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                file3BtnActionPerformed(evt);
+            }
+        });
         jobFilePanel.add(file3Btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 90, -1));
 
         editFileBtn.setText("Edit Files");
+        editFileBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editFileBtnActionPerformed(evt);
+            }
+        });
         jobFilePanel.add(editFileBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, 130, -1));
 
         fileBackBtn.setText("⬅");
+        fileBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileBackBtnActionPerformed(evt);
+            }
+        });
         jobFilePanel.add(fileBackBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         fileExitBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         fileExitBtn.setText("X");
+        fileExitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileExitBtnActionPerformed(evt);
+            }
+        });
         jobFilePanel.add(fileExitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 0, 40, -1));
+
+        notAvailableLbl.setForeground(new java.awt.Color(255, 0, 0));
+        notAvailableLbl.setText("This Feature is currently unavailable");
+        jobFilePanel.add(notAvailableLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, -1));
 
         jobInfoPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -185,6 +264,11 @@ public class WorkTogether extends javax.swing.JFrame {
         jobInfoPanel.add(jobNameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         jobBackBtn.setText("⬅");
+        jobBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobBackBtnActionPerformed(evt);
+            }
+        });
         jobInfoPanel.add(jobBackBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         extraInfoTxtArea.setColumns(20);
@@ -195,15 +279,35 @@ public class WorkTogether extends javax.swing.JFrame {
 
         jobExitBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jobExitBtn.setText("X");
+        jobExitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobExitBtnActionPerformed(evt);
+            }
+        });
         jobInfoPanel.add(jobExitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 0, 40, -1));
 
         filesBtn.setText("Veiw Files");
+        filesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filesBtnActionPerformed(evt);
+            }
+        });
         jobInfoPanel.add(filesBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 150, -1));
 
         clientBtn.setText("Veiw Client Information");
+        clientBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientBtnActionPerformed(evt);
+            }
+        });
         jobInfoPanel.add(clientBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 150, -1));
 
         commentsBtn.setText("View Comments");
+        commentsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                commentsBtnActionPerformed(evt);
+            }
+        });
         jobInfoPanel.add(commentsBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 170, -1));
 
         jobListPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -213,6 +317,11 @@ public class WorkTogether extends javax.swing.JFrame {
         jobListPanel.add(titleLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
 
         job4Bth.setText("Job 4");
+        job4Bth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                job4BthActionPerformed(evt);
+            }
+        });
         jobListPanel.add(job4Bth, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 90, -1));
 
         activeJobsLbl.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -228,19 +337,44 @@ public class WorkTogether extends javax.swing.JFrame {
         jobListPanel.add(job1Btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, -1));
 
         job2Btn.setText("Job 2");
+        job2Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                job2BtnActionPerformed(evt);
+            }
+        });
         jobListPanel.add(job2Btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 90, -1));
 
         job3Btn.setText("Job 3");
+        job3Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                job3BtnActionPerformed(evt);
+            }
+        });
         jobListPanel.add(job3Btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 90, -1));
 
         jiob6Btn.setText("Job 6");
+        jiob6Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jiob6BtnActionPerformed(evt);
+            }
+        });
         jobListPanel.add(jiob6Btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 210, 90, -1));
 
         job5Btn.setText("Job 5");
+        job5Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                job5BtnActionPerformed(evt);
+            }
+        });
         jobListPanel.add(job5Btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 90, -1));
 
         exitBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         exitBtn.setText("X");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
         jobListPanel.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 40, -1));
 
         titlePagePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -334,9 +468,106 @@ public class WorkTogether extends javax.swing.JFrame {
     }//GEN-LAST:event_signInBtnActionPerformed
 
     private void job1BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_job1BtnActionPerformed
-       
-        
+        job(1); 
+        jobNum = 1;
     }//GEN-LAST:event_job1BtnActionPerformed
+
+    private void job2BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_job2BtnActionPerformed
+        job(2);
+        jobNum = 2;
+    }//GEN-LAST:event_job2BtnActionPerformed
+
+    private void job3BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_job3BtnActionPerformed
+        job(3);
+        jobNum = 3;
+    }//GEN-LAST:event_job3BtnActionPerformed
+
+    private void job4BthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_job4BthActionPerformed
+        job(4);
+        jobNum = 4;
+    }//GEN-LAST:event_job4BthActionPerformed
+
+    private void job5BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_job5BtnActionPerformed
+        job(5);
+        jobNum = 5;
+    }//GEN-LAST:event_job5BtnActionPerformed
+
+    private void jiob6BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jiob6BtnActionPerformed
+        job(6);
+        jobNum = 6;
+    }//GEN-LAST:event_jiob6BtnActionPerformed
+
+    private void filesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filesBtnActionPerformed
+        files(jobNum);
+    }//GEN-LAST:event_filesBtnActionPerformed
+
+    private void file1BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file1BtnActionPerformed
+        fileGo();
+    }//GEN-LAST:event_file1BtnActionPerformed
+
+    private void file2BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file2BtnActionPerformed
+        fileGo();
+    }//GEN-LAST:event_file2BtnActionPerformed
+
+    private void file3BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file3BtnActionPerformed
+        fileGo();
+    }//GEN-LAST:event_file3BtnActionPerformed
+
+    private void file4BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file4BtnActionPerformed
+        fileGo();
+    }//GEN-LAST:event_file4BtnActionPerformed
+
+    private void editFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFileBtnActionPerformed
+       notAvailableLbl.show();
+    }//GEN-LAST:event_editFileBtnActionPerformed
+
+    private void clientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientBtnActionPerformed
+        client();  
+    }//GEN-LAST:event_clientBtnActionPerformed
+
+    private void commentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commentsBtnActionPerformed
+        comments();
+    }//GEN-LAST:event_commentsBtnActionPerformed
+
+    private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
+        addComment();
+    }//GEN-LAST:event_sendBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void jobExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobExitBtnActionPerformed
+        System.exit(0);    
+    }//GEN-LAST:event_jobExitBtnActionPerformed
+
+    private void fileExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileExitBtnActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_fileExitBtnActionPerformed
+
+    private void commentsExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commentsExitBtnActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_commentsExitBtnActionPerformed
+
+    private void clientExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientExitBtnActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_clientExitBtnActionPerformed
+
+    private void jobBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobBackBtnActionPerformed
+        back();
+    }//GEN-LAST:event_jobBackBtnActionPerformed
+
+    private void fileBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileBackBtnActionPerformed
+        back();
+    }//GEN-LAST:event_fileBackBtnActionPerformed
+
+    private void commentsBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commentsBackBtnActionPerformed
+        back();
+    }//GEN-LAST:event_commentsBackBtnActionPerformed
+
+    private void clientBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientBackBtnActionPerformed
+        back();
+    }//GEN-LAST:event_clientBackBtnActionPerformed
 
     /**
      * This method is responsible for signing in
@@ -359,6 +590,9 @@ public class WorkTogether extends javax.swing.JFrame {
         
         //Running the file reader to see if the user entered a valid account and password
         try{
+            //Setting proper screen size
+            titlePagePanel.setSize(screenSize.width, screenSize.height);
+                    
             
             //Setting variables to readers
             in = new FileReader(dataFile);
@@ -408,7 +642,7 @@ public class WorkTogether extends javax.swing.JFrame {
                 jobListPanel.show();
 
                 //Came From Stack Overflow
-                titlePagePanel.setSize(screenSize.width, screenSize.height);
+                jobListPanel.setSize(screenSize.width, screenSize.height);
                 
 
             }
@@ -437,7 +671,160 @@ public class WorkTogether extends javax.swing.JFrame {
             }
             }
     }
+    
+    /**
+     * This method is used to display the job screen 
+     * @param number 
+     */
+    public void job(int number){
+        //Hiding the job list page
+        jobListPanel.hide();
+        //Showing the spesific job page
+        jobInfoPanel.show();
+        jobInfoPanel.setSize(screenSize.width, screenSize.height);
+        
+        //Setting the proper title
+        jobNameLbl.setText("Job " + number);
+        
+        //Setting current page to go back to with the back button
+        currentPage = 1;
+    }
 
+    /**
+     * This method opens up the given jobs file screen
+     * @param num 
+     */
+    public void files(int num){
+        //This hides the main job page
+        jobInfoPanel.hide();
+        //This shows the jobs file page
+        jobFilePanel.show();
+        jobFilePanel.setSize(screenSize.width, screenSize.height);
+        //Hiding Error Message
+        notAvailableLbl.hide();
+        
+        //Setting proper title
+        fileTitleLbl.setText("Job " + num);
+        
+        //Setting current page to go back to with the back button
+        currentPage = 2;
+    }
+    
+    /**
+     * This method is responsible for opening files
+     */
+    public void fileGo(){
+        try{
+            //Setting up the information for the users desktop
+            Desktop comp = Desktop.getDesktop();
+            
+            //Opening the installed file with some information for the user
+            File info = new File("file.txt");
+            comp.open(info);
+            
+        }
+        
+        catch (IOException e) {   
+            System.out.println("ERROR File Not Found");
+        }
+        
+    }
+    
+    /**
+     * This method displays the client information for the job
+     */
+    public void client(){
+        //This hides the main job page
+        jobInfoPanel.hide();
+        //This shows the jobs client page
+        clientPanel.show();
+        clientPanel.setSize(screenSize.width, screenSize.height);
+        
+        
+        //Setting proper title
+        clientTitleLbl.setText("Job " + jobNum);
+        
+        //Setting current page to go back to with the back button
+        currentPage = 3;
+    }
+    
+    /**
+     * This method displays the comments page
+     */
+    public void comments(){
+        
+        //This hides the main job page
+        jobInfoPanel.hide();
+        //This shows the jobs client page
+        commentsPanel.show();
+        commentsPanel.setSize(screenSize.width, screenSize.height);
+        
+        
+        //Setting proper title
+        commentsTitleLbl.setText("Job " + jobNum);
+        
+        //Setting current page to go back to with the back button
+        currentPage = 4;
+    }
+    
+    /**
+     * This method adds comments to the comment area
+     */
+    public void addComment(){
+        //Adding the commetns
+        String text = mainCommentTxtArea.getText() + "\n" + addCommentsTxtFeild.getText();
+        mainCommentTxtArea.setText(text);
+        
+        //Resetting text feild
+        addCommentsTxtFeild.setText("");
+    }
+    
+    /**
+     * This method is responsible for the operation of the back buttons
+     */
+    public void back(){
+        if(currentPage == 1){
+            jobInfoPanel.hide();
+            
+            //Displaying and resizing job list
+            jobListPanel.show();
+
+            //Came From Stack Overflow
+            jobListPanel.setSize(screenSize.width, screenSize.height); 
+            
+        }
+        if(currentPage == 2){
+            jobFilePanel.hide();
+            
+            //Displaying and resizing job list
+            jobInfoPanel.show();
+
+            //Came From Stack Overflow
+            jobInfoPanel.setSize(screenSize.width, screenSize.height); 
+        }
+        if(currentPage == 3){
+            clientPanel.hide();
+            
+            //Displaying and resizing job list
+            jobInfoPanel.show();
+
+            //Came From Stack Overflow
+            jobInfoPanel.setSize(screenSize.width, screenSize.height); 
+        }
+        if(currentPage == 4){
+            
+            commentsPanel.hide();
+            
+            //Displaying and resizing job list
+            jobInfoPanel.show();
+
+            //Came From Stack Overflow
+            jobInfoPanel.setSize(screenSize.width, screenSize.height); 
+        }
+        
+        currentPage--;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -521,6 +908,7 @@ public class WorkTogether extends javax.swing.JFrame {
     private javax.swing.JPanel jobListPanel;
     private javax.swing.JLabel jobNameLbl;
     private javax.swing.JTextArea mainCommentTxtArea;
+    private javax.swing.JLabel notAvailableLbl;
     private javax.swing.JLabel passwordLbl;
     private javax.swing.JPasswordField passwordTxtFeild;
     private javax.swing.JButton sendBtn;
